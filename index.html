@@ -1,32 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Quiz App</title>
+        <title>GoT Quiz</title>
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" type="text/css" />
         <!-- fonts ↓ --> 
-        <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Montserrat:wght@500&display=swap"> 
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet"> 
         <link href="style.css" rel="stylesheet" type="text/css" />
     </head>
+
     <body>
 
         <!-- start page -->
 
         <div class="app start-page">
+            <header>
+                <img class="banner" src="image/game-of-thrones-transparent.png" alt="Game of Thrones logo">
+            </header>
             <div class="content">
                 <div class="title">
-                    Quiz App Title
-                </div>
-
-                <div class="cta">
-                    Are you ready for this quiz?!?!
+                    <h1>Test your Game Of Thrones knowledge!</h1>
+                    <img class="toy-jaime" src="image/toy-jaime.jpg" alt="Toy of Jaime Lannister"> 
                 </div>
                 
                 <div class="btn">
-                    <button type="button">Begin</button>
+                    <button type="button">Begin!</button>
                 </div>
 
             </div>
@@ -34,35 +35,99 @@
 
         <!-- question page -->
 
-        <div class="question-container content" id="question">
-            <section>
-                <ul>
+        <div class="app question-container content" id="question">
+            <header>
+                <img class="banner" src="image/game-of-thrones-transparent.png" alt="Game of Thrones logo">
+                <ul class="question-score">
                     <li class="size-me">Question:
                         <span class="question-number">0</span>/10
                     </li> 
                     <li class="size-me">Score: 
-                        <span class="score">0</span>
+                        <span class="score"> 0</span>
                     </li>
                 </ul>    
-            </section>
-            <section id="question-answers">
+            </header>
+            <section class="question-answers" id="question-answers">
                 <div class="question">
                 </div>
                 <div class="answers">
-                    <input type="radio" id="choice0" name="choice" value="choice0">
-                    <label id="label0" for="choice0"></label><br>
-                    <input type="radio" id="choice1" name="choice" value="choice1">
-                    <label id="label1" for="choice1"></label><br>
-                    <input type="radio" id="choice2" name="choice" value="choice2">
-                    <label id="label2" for="choice2"></label><br>
-                    <input type="radio" id="choice3" name="choice" value="choice3">
-                    <label id="label3" for="choice3"></label><br>
+                    <form class="radio-buttons">
+                        <input type="radio" id="choice0" name="choice" class="choose" value=0>
+                        <label id="label0" for="choice0"></label><br>
+                        <input type="radio" id="choice1" name="choice" class="choose" value=1>
+                        <label id="label1" for="choice1"></label><br>
+                        <input type="radio" id="choice2" name="choice" class="choose" value=2>
+                        <label id="label2" for="choice2"></label><br>
+                        <input type="radio" id="choice3" name="choice" class="choose" value=3>
+                        <label id="label3" for="choice3"></label><br>
+                    </form>
                 </div>
-                <div class="btn">
-                    Submit
+                <div class="btn" id="submit-answer">
+                   <button type="button" id="submit-answer-button">Submit</button> 
                 </div>
             </section>
         </div>
+
+        <!-- correct page -->
+
+        <div class="app question-correct">
+            <div class="content">
+                <div class="title">
+                    CORRECT!!!
+                </div>
+
+                <div class="cta">
+                    <img class="image-correct" src="image/oberyn-jump-for-joy.jpg" alt="You got it right!">
+                </div>
+                
+                <div class="btn">
+                    <button type="button" id="correct-next-question">Next question</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- incorrect page -->
+
+        <div class="app question-wrong">
+            <div class="content">
+                <div class="title">
+                    Wrong.
+                </div>
+
+                <div class="cta">
+                    <img class="image-wrong" src="image/got-sheeran.jpg" alt="You got it wrong.">
+                </div>
+                <div id="right-answer">
+
+                </div>
+                
+                <div class="btn">
+                    <button type="button" id="wrong-next-question">Next question</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- results page -->
+        
+        <div class="app results">
+            <div class="results-bg" >
+                <div class="title">
+                    YOU SCORED
+                </div>
+                
+                <div class="final-score" id="final-score">
+                    results will load here.
+                </div>
+                
+                <div class="btn">
+                    <button type="button" id="restart-button">Restart</button>
+                </div>
+
+            </div>
+        </div>
+
         <script
             src="https://code.jquery.com/jquery-3.5.1.min.js"
             integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="

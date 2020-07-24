@@ -68,7 +68,7 @@ const STORE = [
     {
         question: "How did Tywin Lannister die?",
         answers: [
-            "Shot with a corssbow while taking a dump",
+            "Shot with a crossbow while taking a dump",
             "Heart attack while marrying his daughter",
             "In the Battle of the Bastards",
             "Old age"
@@ -113,39 +113,96 @@ const STORE = [
 
 let score = 0;
 let questionNumber = 0;
+let hasSelectedAnswer = false;
 
 function updateQuestionNumber(){
     questionNumber++;
     console.log("questionNumber is " + questionNumber);
+}
+
+function getSelectedStatus(){
+    return parseInt($("input[name='choice']:checked").val()) === undefined;
+}
+
+function startQuizListener(){
+    $(".question-container").hide();
+    $(".question-correct").hide();
+    $(".question-wrong").hide();
+    $(".results").hide();
+    $("#submit-answer-button").prop("disabled", true);
+    $(".start-page").on("click", "button", function(event){
+        $(".start-page").hide();
+        displayQuestion();
+        console.log("startQuizListener ran");
+    });
     
+    $(".choose").on("click", function(event){
+        console.log("raadio!!!");
+        $("#submit-answer-button").prop("disabled", false);
+    })
+    $("#submit-answer").on("click", function(event){
+        console.log("answer submit button clicked");
+        $(".question-container").hide();
+        questionResult();
+    });
+    $("#correct-next-question, #wrong-next-question").on("click", function(event){
+        $("#submit-answer-button").prop("disabled", true);
+        console.log("next question clicked");
+        $(".question-correct").hide();
+        $(".question-wrong").hide();
+        nextQuestion();
+    });
+    $("#restart-button").on("click", function(event){
+        restart();
+    });
 }
 
 function displayQuestion(){
     $(".question-number").text(questionNumber + 1);
+    $(".score").text(score);
     let currentIndex = STORE[questionNumber];
     $(".question").text(currentIndex.question);
-    $("#choice0").val(currentIndex.answers[0]);
     $("#label0").text(currentIndex.answers[0]);
-    $("#choice1").val(currentIndex.answers[1]);
     $("#label1").text(currentIndex.answers[1]);
-    $("#choice2").val(currentIndex.answers[2]);
     $("#label2").text(currentIndex.answers[2]);
-    $("#choice3").val(currentIndex.answers[3]);
     $("#label3").text(currentIndex.answers[3]);
-    $("question-container").show();
+    $(".question-container").show();
 }
 
-function startQuizListener(){
-    $(".start-page").on("click", "button", function(event){
-        $(".start-page").hide();
-        displayQuestion();
+function questionResult(){
+    if(questionNumber === STORE.length - 1){
+        $("#correct-next-question, #wrong-next-question").text("See results");
+    }
+    if(parseInt($("input[name='choice']:checked").val()) === STORE[questionNumber].correctAnswer){
+        score++;
+        $(".question-correct").show();
+    }
+    else{
+        $("#right-answer").text("The correct answer is " + STORE[questionNumber].answers[STORE[questionNumber].correctAnswer] + ", you fool.");
+        $(".question-wrong").show();
+    }
+    $("input[name='choice']").prop('checked',false);
+}
+
+function nextQuestion(){
+    if(questionNumber === STORE.length - 1){
+        results();
+    }else{
         updateQuestionNumber();
-        console.log("startQuiz ran");
-    });
-    
+        displayQuestion();
+    }
 }
 
+function results(){
+    $("#final-score").text(score + "/10");
+    $(".results").show();
+}
 
+function restart(){
+    score = 0;
+    questionNumber = 0;
+    displayQuestion();
+}
 
 $(startQuizListener);
 
@@ -175,11 +232,10 @@ choose answer with radio buttons
 unlock submit button
 submit answer
 -listen for submit button click
---
-check answer
--compare checked answer to correct answer
-add 1 to score counter if correct
-render correct/incorrect answer page
+--check answer
+---compare checked answer to correct answer
+----if checked answer is equal to correct answer, add 1 to score counter, and render correct answer page
+otherwise, render incorrect answer page
 listen for next question button click
 locate next question and choices
 render next question and choices
