@@ -1,0 +1,258 @@
+:root {
+    font-size: 14px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cinzel', serif;
+}
+
+body {
+    background: #333;
+}
+
+.app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #0a0908;
+}
+
+.start-page {
+    display: flex;
+    background-image: url("image/got-illustration.jpg");
+}
+
+header {
+    position: absolute;
+    top: 0;
+    background-color: #0a0908;
+    width: 100%;
+}
+
+.banner {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+}
+
+.content {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #eae0d5;
+}
+
+.title {
+    margin: 25px 0;
+    align-items: center;
+    text-align: center;
+    font-size: 2rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.toy-jaime {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    border-radius: 5px;
+}
+
+.cta {
+    font-size: 1.5rem;
+}
+
+.size-me {
+    display: flex;
+    font-size: 1.5rem;
+    color: #eae0d5;
+    justify-content: center;
+    padding-bottom: 8px;
+}
+
+.question-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-image: url("image/got-illustration.jpg");
+}
+
+.question {
+    width: 100%;
+    display: flex;
+    align-content: flex-start;
+    margin-top: 3em;
+    font-size: 3rem;
+    text-align: left;
+    padding: 20px 10px;
+    background: #c6ac8f;
+}
+
+.question-answers {
+    width: 100%;
+}
+
+
+.question-number {
+    display: flex;
+}
+
+.answers {
+    width: auto;
+    display: grid;
+    gap: 10px;
+    font-size: 2rem;
+    background: #eae0d5;
+}
+
+.radio-buttons {
+    margin: 5px;
+}
+
+.question-correct {
+    font-weight: 700;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-image: url("image/got-illustration.jpg");
+}
+
+
+.image-correct {
+    display: flex;
+    margin: auto;
+    width: 80%;
+    border-radius: 5px;
+}
+
+.question-wrong {
+    font-weight: 700;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-image: url("image/got-illustration.jpg");
+}
+
+#right-answer {
+    font-size: 1.2rem;
+    margin: 5px;
+}
+
+.image-wrong {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    border-radius: 5px;
+}
+
+.results {
+    color: #eae0d5;
+    background-image: url("image/walker-dragon.jpg");
+}
+
+
+.final-score {
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.results-bg {
+    background: #22333b;
+    opacity: 0.75;
+}
+
+.btn {
+    width: fit-content;
+    padding: 10px 10px;
+    border-radius: 10px; 
+    text-transform: uppercase;
+    background: #aaa;
+    font-size: 1.8rem;
+    margin: 15% auto;
+}
+
+input[type=radio] {
+    width: 20px;
+    height: 20px;
+}
+
+@media all and (min-width: 600px) {
+    h1 {
+        font-size: 3rem;
+        text-align: center;
+    }
+    
+    .toy-jaime {
+       width: 300px;
+    }
+
+    .question {
+        margin-top: 15%;
+        margin-bottom: 2%;
+        display: flex;
+        justify-content: center;
+        font-size: 2.5rem;
+    }
+
+    .radio-buttons {
+        display: flex;
+        flex-direction: column; 
+        /* justify-content: center; */
+        font-size: 2rem;
+        margin: 5px;
+        align-items: center;
+    }
+
+
+
+    .answers {
+        width: auto;
+        display: grid;
+        gap: 10px;
+        font-size: 2rem;
+        /* justify-content: center; */
+        
+        background: #eae0d5;
+    }
+
+    .image-correct {
+        width: 300px;
+    }
+
+    .image-wrong {
+        width: 300px;
+    }
+
+    .btn {
+        width: fit-content;
+        padding: 10px 10px;
+        border-radius: 10px; 
+        text-transform: uppercase;
+        background: #aaa;
+        font-size: 1.8rem;
+        margin: 25px auto; 
+        /* margin: 15% auto; */
+    }
+
+}
