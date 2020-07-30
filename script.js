@@ -120,8 +120,145 @@ function updateQuestionNumber(){
     console.log("questionNumber is " + questionNumber);
 }
 
+function renderQuestionScreen(){
+    const html =  `
+    <header>
+        <img class="banner" src="image/game-of-thrones-transparent.png" alt="Game of Thrones logo">
+        <ul class="question-score">
+            <li class="size-me">Question:
+                <span class="question-number">0</span>/10
+            </li> 
+            <li class="size-me">Score: 
+                <span class="score"> 0</span>
+            </li>
+        </ul>    
+    </header>
+    <section class="question-answers" id="question-answers">
+        
+        <div class="answers">
+            <form class="radio-buttons">
+                <div class="question">
+                </div>
+                <input type="radio" id="choice0" name="choice" class="choose" value=0>
+                <label id="label0" for="choice0"></label><br>
+                <input type="radio" id="choice1" name="choice" class="choose" value=1>
+                <label id="label1" for="choice1"></label><br>
+                <input type="radio" id="choice2" name="choice" class="choose" value=2>
+                <label id="label2" for="choice2"></label><br>
+                <input type="radio" id="choice3" name="choice" class="choose" value=3>
+                <label id="label3" for="choice3"></label><br>
+            </form>
+        </div>
+        <div class="btn" id="submit-answer">
+        <button type="button" id="submit-answer-button">Submit</button> 
+        </div>
+    </section>`
+    $(".question-container").html(html);
+}
+
+function renderCorrectPage(){
+    const html = `
+    <div class="content">
+        <div class="title">
+            CORRECT!!!
+        </div>
+
+        <div class="cta">
+            <img class="image-correct" src="image/oberyn-jump-for-joy.jpg" alt="You got it right!">
+        </div>
+        
+        <div class="btn">
+            <button type="button" class="next-button" id="correct-next-question">Next</button>
+        </div>
+
+    </div>`
+    
+    $(".question-correct").html(html);
+}
+
+function renderWrongPage(){
+    const html = `
+        <div class="content">
+            <div class="title">
+                Wrong.
+            </div>
+
+            <div class="cta">
+                <img class="image-wrong" src="image/got-sheeran.jpg" alt="You got it wrong.">
+            </div>
+            <div id="right-answer">
+
+            </div>
+            
+            <div class="btn">
+                <button type="button" class="next-button" id="wrong-next-question">Next</button>
+            </div>
+        </div>`
+
+    $(".question-wrong").html(html);
+}
+
+function renderResults(){
+    const html = `
+            <div class="results-bg" >
+                <div class="title">
+                    YOU SCORED
+                </div>
+                
+                <div class="final-score" id="final-score">
+                    results will load here.
+                </div>
+                
+                <div class="btn">
+                    <button type="button" class="restart-button" id="restart-button">Restart</button>
+                </div>
+
+            </div>`
+
+    $(".results").html(html);
+}
+
 function getSelectedStatus(){
     return parseInt($("input[name='choice']:checked").val()) === undefined;
+}
+
+function clickBegin(){
+    $(".start-page").on("click", "button", function(event){
+        $(".start-page").hide();
+        displayQuestion();
+        console.log("startQuizListener ran");
+    });
+}
+
+function radioClicks(){
+    $(".question-container").on("click", ".choose", function(event){
+        console.log("raadio!!!");
+        $("#submit-answer-button").prop("disabled", false);
+    })
+}
+
+function clickSubmitAnswer(){
+    $(".question-container").on("click", "#submit-answer", function(event){
+        console.log("answer submit button clicked");
+        $(".question-container").hide();
+        questionResult();
+    });
+}
+
+function clickNextQuestion(){
+    $(".question-correct, .question-wrong").on("click", ".next-button", function(event){
+        $("#submit-answer-button").prop("disabled", true);
+        console.log("next question clicked");
+        $(".question-correct").hide();
+        $(".question-wrong").hide();
+        nextQuestion();
+    });
+}
+
+function clickRestart(){
+    $(".results").on("click", ".restart-button", function(event){
+        restart();
+    });
 }
 
 function startQuizListener(){
@@ -129,35 +266,22 @@ function startQuizListener(){
     $(".question-correct").hide();
     $(".question-wrong").hide();
     $(".results").hide();
-    $("#submit-answer-button").prop("disabled", true);
-    $(".start-page").on("click", "button", function(event){
-        $(".start-page").hide();
-        displayQuestion();
-        console.log("startQuizListener ran");
-    });
     
-    $(".choose").on("click", function(event){
-        console.log("raadio!!!");
-        $("#submit-answer-button").prop("disabled", false);
-    })
-    $("#submit-answer").on("click", function(event){
-        console.log("answer submit button clicked");
-        $(".question-container").hide();
-        questionResult();
-    });
-    $("#correct-next-question, #wrong-next-question").on("click", function(event){
-        $("#submit-answer-button").prop("disabled", true);
-        console.log("next question clicked");
-        $(".question-correct").hide();
-        $(".question-wrong").hide();
-        nextQuestion();
-    });
-    $("#restart-button").on("click", function(event){
-        restart();
-    });
+    
+    clickBegin();
+
+    radioClicks();
+    
+    clickSubmitAnswer();
+    
+    clickNextQuestion();
+
+    clickRestart();
+    
 }
 
 function displayQuestion(){
+    renderQuestionScreen();
     $(".question-number").text(questionNumber + 1);
     $(".score").text(score);
     let currentIndex = STORE[questionNumber];
@@ -167,6 +291,8 @@ function displayQuestion(){
     $("#label2").text(currentIndex.answers[2]);
     $("#label3").text(currentIndex.answers[3]);
     $(".question-container").show();
+    $("#submit-answer-button").prop("disabled", true);
+    radioClicks();
 }
 
 function questionResult(){
@@ -175,9 +301,10 @@ function questionResult(){
     }
     if(parseInt($("input[name='choice']:checked").val()) === STORE[questionNumber].correctAnswer){
         score++;
+        renderCorrectPage();
         $(".question-correct").show();
-    }
-    else{
+    }else{
+        renderWrongPage();
         $("#right-answer").text("The correct answer is " + STORE[questionNumber].answers[STORE[questionNumber].correctAnswer] + ", you fool.");
         $(".question-wrong").show();
     }
@@ -194,6 +321,7 @@ function nextQuestion(){
 }
 
 function results(){
+    renderResults();
     $("#final-score").text(score + "/10");
     $(".results").show();
 }
@@ -201,6 +329,7 @@ function results(){
 function restart(){
     score = 0;
     questionNumber = 0;
+    $(".results").hide();
     displayQuestion();
 }
 
